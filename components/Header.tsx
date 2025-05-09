@@ -58,8 +58,8 @@ function Header() {
                         sm:flex-none
                         items-center
                         space-x-2
-                        bg-blue-500
-                        hover:bg-blue-700
+                        bg-blue-200
+                        hover:bg-blue-300
                         text-white
                         font-bold
                         py-2
@@ -84,8 +84,8 @@ function Header() {
                                 sm:flex-none 
                                 items-center 
                                 space-x-2
-                                bg-blue-500
-                                hover:bg-blue-700
+                                bg-blue-200
+                                hover:bg-blue-300
                                 text-white
                                 font-bold
                                 py-2
@@ -110,7 +110,7 @@ function Header() {
                         )}
                         {user?.passkeys.length === 0 && (
                             <button onClick={createClerkPasskey}
-                            className="bg-white hover:bg-blue-700 hover:text-white animate-pulse text-blue-500 font-bold py-2 px-4 rounded
+                            className="bg-white hover:bg-blue-300 hover:text-white animate-pulse text-blue-500 font-bold py-2 px-4 rounded
                             border-blue-300 border"
                             >
                               Create a passkey now    
