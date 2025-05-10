@@ -8,7 +8,12 @@ function Header() {
     const { user } = useUser();
 
     const createClerkPasskey = async () => { 
-        await user?.createPasskey();
+        try{
+            const response = await user?.createPasskey();
+            console.log(response);
+        }catch (err){
+            console.error("Error:", JSON.stringify(err,null,2));
+        }
      };
 
     return (
@@ -47,7 +52,7 @@ function Header() {
                     "
                     />
                 </Form>
-                <div>
+                <div className="flex flex-1 justify-between items-center space-x-2 mt-2 not-last:sm:mt-0 ">
                     <Link href="/basket"
                         className="
                         flex-1 
@@ -58,8 +63,8 @@ function Header() {
                         sm:flex-none
                         items-center
                         space-x-2
-                        bg-blue-200
-                        hover:bg-blue-300
+                        bg-green-300
+                        hover:bg-green-800
                         text-white
                         font-bold
                         py-2
