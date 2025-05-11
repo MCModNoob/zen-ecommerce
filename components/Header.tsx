@@ -17,14 +17,14 @@ function Header() {
      };
 
     return (
-        <header className="flex flex-wrap justify-between items-center px-4 py-2">
+        <header className="flex flex-wrap justify-between items-center px-4 py-2 ">
             {/* Top row */}
-            <div className="flex w-full flex-wrap justify-between items-center">
+            <div className="flex w-full flex-wrap justify-between items-center space-x-2">
                 <Link href="/"
                     className="
-                    text-2xl
+                    text-3xl
                     font-bold
-                    text-red-700
+                    text-green-500
                     hover:opacity-50
                     cursor-pointer
                     mx-auto
@@ -32,7 +32,7 @@ function Header() {
                 ">
                     Zen</Link>
                 <Form action="/search"
-                    className="w-full mt-2 sm:w-auto sm:flex-1 sm:mx-4 sm:mt-0">
+                    className="w-full mt-2 sm:w-auto flex-1 sm:mx-4 sm:mt-0">
                     <input
                         type="text"
                         name="query"
@@ -52,7 +52,7 @@ function Header() {
                     "
                     />
                 </Form>
-                <div className="flex flex-1 justify-between items-center space-x-2 mt-2 not-last:sm:mt-0 ">
+                <div className="flex flex-1 justify-between items-center space-x-2 mt-2 not-last:sm:mt-0">
                     <Link href="/basket"
                         className="
                         flex-1 
@@ -63,7 +63,7 @@ function Header() {
                         sm:flex-none
                         items-center
                         space-x-2
-                        bg-green-300
+                        bg-green-400
                         hover:bg-green-800
                         text-white
                         font-bold
@@ -89,8 +89,8 @@ function Header() {
                                 sm:flex-none 
                                 items-center 
                                 space-x-2
-                                bg-blue-200
-                                hover:bg-blue-300
+                                bg-green-400
+                                hover:bg-green-800
                                 text-white
                                 font-bold
                                 py-2
@@ -115,7 +115,7 @@ function Header() {
                         )}
                         {user?.passkeys.length === 0 && (
                             <button onClick={createClerkPasskey}
-                            className="bg-white hover:bg-blue-300 hover:text-white animate-pulse text-blue-500 font-bold py-2 px-4 rounded
+                            className="bg-white hover:bg-green-800 hover:text-white animate-pulse text-blue-500 font-bold py-2 px-4 rounded
                             border-blue-300 border"
                             >
                               Create a passkey now    
