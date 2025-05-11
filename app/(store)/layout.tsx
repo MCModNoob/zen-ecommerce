@@ -29,6 +29,7 @@ export default function RootLayout({children,}: Readonly<{ children: React.React
         <main>
           <Header />
         {children}
+        
         </main>
       </body>
     </html>
