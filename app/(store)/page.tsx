@@ -1,9 +1,13 @@
 import ProductsView from "@/components/ProductsView";
 import { Button } from "@/components/ui/button";
 import { getAllProducts } from "@/sanity/lib/products/getAllProducts";
+import { ProductType } from "@/sanity.types";
+import { Category } from "@/sanity.types";
+import { getAllCategories } from "@/sanity/lib/products/getAllCategories";
 
 export default async function Home() {
   const products = await getAllProducts();
+  const categories = await getAllCategories();
 
   // console.log(
   //   crypto.randomUUID().slice(0, 5) +
