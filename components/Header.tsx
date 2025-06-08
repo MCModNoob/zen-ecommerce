@@ -17,9 +17,9 @@ function Header() {
      };
 
     return (
-        <header className="flex flex-wrap justify-between items-center px-4 py-2 ">
+        <header className="flex flex-wrap justify-between items-center px-4 py-2 sm:flex-row flex-col">
             {/* Top row */}
-            <div className="flex w-full flex-wrap justify-between items-center space-x-2">
+            <div className="flex w-full flex-wrap justify-between items-center space-x-2 ">
                 <Link href="/"
                     className="
                     text-3xl
