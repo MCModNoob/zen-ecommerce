@@ -45,7 +45,9 @@ function ProductThumb({ product }: { product: ProductType }) {
                         )
                         .join(" ") || "No description available"}
                 </p>
-
+                <p className="mt-2 text-lg text-black"> 
+                   £{product.price}
+                </p>
             </div>
         </Link>
     )
