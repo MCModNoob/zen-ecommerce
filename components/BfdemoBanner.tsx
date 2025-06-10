@@ -9,10 +9,10 @@ async function BfdemoBanner() {
     }
 
     return (<div
-        className="bg-gradient-to-r from-green-400 to-black text-white w-full py-10 mx-4 mt-2 rounded-lg 
-    shadow-lg"
+        className="bg-gradient-to-r from-green-400 to-black text-white w-full p-4 mt-2 
+        rounded-lg shadow-lg "
     >
-        <div className="flex container mx-auto  items-center justify-between ">
+        <div className="flex container mx-auto items-center justify-between ">
             <div className="flex-1">
                 <h2 className="text-2xl sm:text-5xl font-extrabold text-left mb-4">
                     {sale.title}
