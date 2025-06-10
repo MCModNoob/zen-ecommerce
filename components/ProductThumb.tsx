@@ -4,7 +4,7 @@ import { ProductType } from "@/sanity.types";
 import Link from "next/link";
 import Image from "next/image";
 import { imageUrlFor } from "@/lib/imageURL";
-import { blockContentType } from "@/sanity/schemaTypes/blockContentType";
+
 
 function ProductThumb({ product }: { product: ProductType }) {
     const isOutOfStock = product.stock != null && product.stock <= 0;

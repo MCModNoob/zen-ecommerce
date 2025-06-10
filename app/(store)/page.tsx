@@ -4,8 +4,9 @@ import { getAllProducts } from "@/sanity/lib/products/getAllProducts";
 import { ProductType } from "@/sanity.types";
 import { Category } from "@/sanity.types";
 import { getAllCategories } from "@/sanity/lib/products/getAllCategories";
+import BfdemoBanner from "@/components/BfdemoBanner";
 
-export default async function Home() {
+export default async function Home() {  
   const products = await getAllProducts();
   const categories = await getAllCategories();
 
@@ -17,9 +18,9 @@ export default async function Home() {
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
 
-      <h1>Hello world </h1>
+      <BfdemoBanner/>
 
-      <div className="flex flex-col gap-4"> 
+      <div className="flex flex-col items-center justify-top min-h-screen bg-gray-200 p-4"> 
         <ProductsView products={products} categories={categories}/>
       </div>
     </div>
