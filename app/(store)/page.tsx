@@ -16,7 +16,7 @@ export default async function Home() {
   // );
 
   return (
-    <div className="min-h-screen pb-10 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+    <div className="min-h-screen sm:p-2 font-[family-name:var(--font-geist-sans)]">
       <BfdemoBanner />
       <div className="mt-8 flex flex-col items-center min-h-screen bg-gray-200 p-4">
         <ProductsView products={products} categories={categories} />
