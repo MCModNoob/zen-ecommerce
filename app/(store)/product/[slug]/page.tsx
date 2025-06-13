@@ -2,7 +2,7 @@ import { getProductBySlug } from "@/sanity/lib/products/getProductBySlug";
 
 import { notFound } from "next/navigation";
 import Image from "next/image";
-import { imageBuilder, imageUrlFor } from "@/lib/imageURL";
+import {  imageUrlFor } from "@/lib/imageURL";
 import { PortableText } from "next-sanity";
 
 async function productPage({
@@ -22,7 +22,7 @@ async function productPage({
     const isOutOfStock = product.stock != null && product.stock <= 0;
 
     return (
-        <div className="container  px-2 py-2">
+        <div className="container mx-auto px-2 py-2">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 ">
                 <div
                     className={`relative aspect-square overflow-hidden rounded-lg shadow-lg ${isOutOfStock ? "opacity/50" : ""}`}
@@ -44,7 +44,7 @@ async function productPage({
                 </div>
                 <div className="flex flex-col justify-between"
                 >
-                    <h1 className="text-3xl fond-bold mb-4 "
+                    <h1 className="text-3xl font-bold mb-4 "
                     >
                         {product.name}
                     </h1>
@@ -56,7 +56,6 @@ async function productPage({
                             <PortableText value={product.description}/>
                         )}
                     </div>
-                    
                 </div>
             </div>
         </div>)
