@@ -73,16 +73,19 @@ export function CategorySelectorComponent({ categories }: CategorySelectorProps)
                             {categories.map((category) => (
                                 <CommandItem
                                     key={category._id}
-                                    value={category.title}
+                                    value={category._id}
                                     onSelect={(currentValue) => {
                                         setValue(currentValue === value ? "" : currentValue)
+                                        if (category.slug?.current) {
+                                            router.push(`/categories/${category.slug.current}`)
+                                        }
                                         setOpen(false)
                                     }}
                                 >
                                     <CheckIcon
                                         className={cn(
                                             "mr-2 h-4 w-4",
-                                            value === category.title ? "opacity-100" : "opacity-0"
+                                            value === category._id ? "opacity-100" : "opacity-0"
                                         )}
                                     />
                                     {category.title}
