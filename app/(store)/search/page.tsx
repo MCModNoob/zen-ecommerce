@@ -37,7 +37,6 @@ async function SearchPage({
             </h1>
 
             <ProductGrid products={products} />
-
         </div>
     </div>
     )
