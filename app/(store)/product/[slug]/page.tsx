@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import {  imageUrlFor } from "@/lib/imageURL";
 import { PortableText } from "next-sanity";
+import AddToBasketButton from "@/components/AddToBasketButton";
+import { productType } from "@/sanity/schemaTypes/productType";
 
 async function productPage({
     params,
@@ -55,6 +57,9 @@ async function productPage({
                         {Array.isArray(product.description) && (
                             <PortableText value={product.description}/>
                         )}
+                    </div>
+                    <div className="mt-6">
+                    <AddToBasketButton product={product} disabled={isOutOfStock}/>
                     </div>
                 </div>
             </div>

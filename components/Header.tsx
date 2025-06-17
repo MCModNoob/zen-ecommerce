@@ -3,18 +3,20 @@ import { ClerkLoaded, SignInButton, UserButton, useUser } from "@clerk/nextjs"
 import Link from "next/link";
 import Form from "next/form";
 import { PackageIcon, TrolleyIcon } from "@sanity/icons";
+import { useBasketStore } from "@/store/store";
 
 function Header() {
     const { user } = useUser();
+    const itemCount = useBasketStore((state) => state.itemsList.reduce((totalCount, current) => totalCount + current.quantity, 0))
 
-    const createClerkPasskey = async () => { 
-        try{
+    const createClerkPasskey = async () => {
+        try {
             const response = await user?.createPasskey();
             console.log(response);
-        }catch (err){
-            console.error("Error:", JSON.stringify(err,null,2));
+        } catch (err) {
+            console.error("Error:", JSON.stringify(err, null, 2));
         }
-     };
+    };
 
     return (
         <header className="flex flex-wrap justify-between items-center px-4 py-2 sm:flex-row flex-col">
@@ -72,7 +74,7 @@ function Header() {
                         rounded"
                     >
                         <TrolleyIcon className="w-6 h-6" />
-                        {/* span item count once global state is implemented */}
+                        <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded w-5 h-5 flex items-center justify-center text-xs ">{itemCount}</span>
                         <span>My Basket</span>
                     </Link>
 
@@ -115,10 +117,10 @@ function Header() {
                         )}
                         {user?.passkeys.length === 0 && (
                             <button onClick={createClerkPasskey}
-                            className="bg-white hover:bg-green-800 hover:text-white animate-pulse text-blue-500 font-bold py-2 px-4 rounded
+                                className="bg-white hover:bg-green-800 hover:text-white animate-pulse text-blue-500 font-bold py-2 px-4 rounded
                             border-blue-300 border"
                             >
-                              Create a passkey now    
+                                Create a passkey now
                             </button>
                         )}
                     </ClerkLoaded>
