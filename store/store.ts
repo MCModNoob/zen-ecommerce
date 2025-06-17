@@ -18,7 +18,7 @@ interface BasketState {
     getGroupedItems: () => BasketItem[];
 }
 
-const useShopBasket = create<BasketState>()(
+export const useBasketStore = create<BasketState>()(
     persist(
         (set, get) => ({
             itemsList: [],
@@ -55,7 +55,7 @@ const useShopBasket = create<BasketState>()(
                 return get().itemsList.reduce((acc, current) => acc + (current.product.price ?? 0) * current.quantity, 0)
             },
             getItemCount : (productId) =>{
-                const item = get().itemsList.find((item)=>{item.product._id === productId })
+                const item = get().itemsList.find((item) => item.product._id === productId)
                 return item ? item.quantity : 0
             },
             getGroupedItems : () => get().itemsList,
