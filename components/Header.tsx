@@ -4,8 +4,11 @@ import Link from "next/link";
 import Form from "next/form";
 import { PackageIcon, TrolleyIcon } from "@sanity/icons";
 import { useBasketStore } from "@/store/store";
+import { useEffect, useState } from "react";
 
 function Header() {
+    const [mounted, setMounted] = useState(false);
+    useEffect(() => setMounted(true), []);
     const { user } = useUser();
     const itemCount = useBasketStore((state) => state.itemsList.reduce((totalCount, current) => totalCount + current.quantity, 0))
 
@@ -80,7 +83,7 @@ function Header() {
 
                     {/* User area */}
                     <ClerkLoaded>
-                        {user && (
+                        {mounted && user && (
                             <Link
                                 href="/orders"
                                 className="flex-1 
@@ -104,7 +107,7 @@ function Header() {
                             </Link>
                         )}
 
-                        {user ? (
+                        {mounted && user ? (
                             <div className="flex items-center space-x-2">
                                 <UserButton />
                                 <div className="hidden sm:block text-xs">
@@ -115,7 +118,7 @@ function Header() {
                         ) : (
                             <SignInButton mode="modal" />
                         )}
-                        {user?.passkeys.length === 0 && (
+                        {mounted && user?.passkeys.length === 0 && (
                             <button onClick={createClerkPasskey}
                                 className="bg-white hover:bg-green-800 hover:text-white animate-pulse text-blue-500 font-bold py-2 px-4 rounded
                             border-blue-300 border"
