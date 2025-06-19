@@ -96,6 +96,8 @@ function BasketPage() {
                             </span>
                         </p>
                     </div>
+                  
+                  
                     {isSignedIn ? (
                         <button
                             onClick={handleCheckOut}
