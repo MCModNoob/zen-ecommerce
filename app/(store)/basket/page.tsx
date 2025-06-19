@@ -1,9 +1,11 @@
 "use client"
+import { createCheckoutSession, Metadata } from '@/actions/createCheckoutSession';
 import AddToBasketButton from '@/components/AddToBasketButton';
 import { Button } from '@/components/ui/button';
 import { imageUrlFor } from '@/lib/imageURL';
 import { useBasketStore } from '@/store/store'
 import { SignInButton, useAuth, useUser } from '@clerk/nextjs';
+import { EmailAddress } from '@clerk/nextjs/server';
 import { Loader } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -34,7 +36,29 @@ function BasketPage() {
         )
     }
 
-    const handleCheckOut = async () => { }
+    const handleCheckOut = async () => {
+        if (isLoading) return;
+        setIsLoading(true);
+
+        try {
+            const metadata: Metadata = {
+                orderNumber: crypto.randomUUID(),
+                customerName: user?.fullName ?? "unknown",
+                customerEmail: user?.emailAddresses[0].emailAddress ?? "unknown",
+                clerkUserID: user!.id,
+            };
+            const checkoutUrl = await createCheckoutSession(groupedItem, metadata);
+
+            if (checkoutUrl) {
+                window.location.href = checkoutUrl;
+            }
+        } catch (error) {
+            console.error("ERROR CREATING CHECKOUT SESSION", error)
+        } finally {
+            setIsLoading(false)
+        }
+
+    }
 
     return (
         <div className='container mx-auto p-4 max-w-6xl'>
@@ -52,23 +76,26 @@ function BasketPage() {
                                 }}
                             >
                                 <div className='w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0 mr-4'>
-                                {item.product.image &&(
-                                   < Image
-                                    src={imageUrlFor(item.product.image).url()}
-                                    alt={item.product.name?? "product image"}
-                                    className='w-full h-full object-cover rounded'
-                                    width={96}
-                                    height={96}
-                                   />
-                                )}
+                                    {item.product.image && (
+                                        < Image
+                                            src={imageUrlFor(item.product.image).url()}
+                                            alt={item.product.name ?? "product image"}
+                                            className='w-full h-full object-cover rounded'
+                                            width={96}
+                                            height={96}
+                                        />
+                                    )}
                                 </div>
                                 <div className='min-w-0'>
                                     <h2 className='text-lg sm:text-xl font-semibold truncate'>
                                         {item.product.name}
                                     </h2>
                                     <p className='text-sm sm:text-base'>
-                                        Price: £
-                                        {((item.product.price?? 0)* item.quantity).toFixed(2)}
+                                        Price: {item.product.price == null ? (
+                                            <span className="text-red-500 font-bold ml-1">No price set</span>
+                                        ) : (
+                                            <>£{(item.product.price * item.quantity).toFixed(2)}</>
+                                        )}
                                     </p>
                                 </div>
                             </div>
