@@ -27,6 +27,7 @@ function AddToBasketButton({ product, disabled }: AddToBasketButtonProps) {
 
   return (
     <div className='flex items-center justify-center space-x-2'>
+      {/* <button className='w- text-center font-semibold'>Add to basket</button> */}
       <button
         onClick={() => removeItem(product._id)}
         className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors duration-200 ${itemCount === 0
@@ -41,7 +42,9 @@ function AddToBasketButton({ product, disabled }: AddToBasketButtonProps) {
           -
         </span>
       </button >
+
       <span className='w-8 text-center font-semibold'>{itemCount}</span>
+
       <button
       onClick={() => addItem(product)}
       className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors duration-200 ${
