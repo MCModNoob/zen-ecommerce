@@ -127,6 +127,13 @@
         },
         "optional": true
       },
+      "clerkUserID": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
       "stripeCustomerId": {
         "type": "objectAttribute",
         "value": {

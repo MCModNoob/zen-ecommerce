@@ -35,6 +35,7 @@ export type Order = {
   _updatedAt: string;
   _rev: string;
   orderNumber?: string;
+  clerkUserID?: string;
   stripeCustomerId?: string;
   stripePaymentIntentId?: string;
   products?: Array<{
@@ -281,6 +282,93 @@ export type SanityAssetSourceData = {
 
 export type AllSanitySchemaTypes = Sales | Order | ProductType | Category | BlockContent | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
+// Source: ./sanity/lib/orders/getMyOrders.ts
+// Variable: MY_ORDERS_QUERY
+// Query: *[_type == "order" && clerkUserID == $userId] | order(orderDate desc){                ...,                products[]{                    ...,                    product->                }            }
+export type MY_ORDERS_QUERYResult = Array<{
+  _id: string;
+  _type: "order";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  orderNumber?: string;
+  clerkUserID?: string;
+  stripeCustomerId?: string;
+  stripePaymentIntentId?: string;
+  products: Array<{
+    product: {
+      _id: string;
+      _type: "productType";
+      _createdAt: string;
+      _updatedAt: string;
+      _rev: string;
+      name?: string;
+      slug?: Slug;
+      image?: {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        _type: "image";
+      };
+      description?: Array<{
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
+        listItem?: "bullet";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      } | {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt?: string;
+        _type: "image";
+        _key: string;
+      }>;
+      price?: number;
+      catagories?: Array<{
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        _key: string;
+        [internalGroqTypeReferenceTo]?: "category";
+      }>;
+      stock?: number;
+    } | null;
+    quantity?: number;
+    _key: string;
+  }> | null;
+  totalPrice?: number;
+  currency?: string;
+  amountDiscount?: number;
+  status?: "cancelled" | "delivered" | "failed" | "paid" | "pending" | "refunded" | "shipped";
+  orderDate?: string;
+  customerName?: string;
+  email?: string;
+}>;
+
 // Source: ./sanity/lib/products/getAllCategories.ts
 // Variable: All_CATEGORIES_QUERY
 // Query: *[        _type == "category"    ] | order(name asc)
@@ -299,6 +387,71 @@ export type All_CATEGORIES_QUERYResult = Array<{
 // Variable: All_PRODUCTS_QUERY
 // Query: *[        _type == "productType"    ] | order(name asc)
 export type All_PRODUCTS_QUERYResult = Array<{
+  _id: string;
+  _type: "productType";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: string;
+  slug?: Slug;
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  description?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
+    listItem?: "bullet";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  } | {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+    _key: string;
+  }>;
+  price?: number;
+  catagories?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "category";
+  }>;
+  stock?: number;
+}>;
+
+// Source: ./sanity/lib/products/getProductByCategory.ts
+// Variable: PRODUCT_BY_CATEGORY_QUERY
+// Query: *[            _type == "productType"            && references(*[_type == "category" && slug.current == $categorySlug]._id)        ]
+export type PRODUCT_BY_CATEGORY_QUERYResult = Array<{
   _id: string;
   _type: "productType";
   _createdAt: string;
@@ -512,8 +665,10 @@ export type ACTIVE_SALE_BY_COUPON_QUERYResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
+    "\n            *[_type == \"order\" && clerkUserID == $userId] | order(orderDate desc){\n                ...,\n                products[]{\n                    ...,\n                    product->\n                }\n            }\n        ": MY_ORDERS_QUERYResult;
     "\n    *[\n        _type == \"category\"\n    ] | order(name asc)\n    ": All_CATEGORIES_QUERYResult;
     "\n    *[\n        _type == \"productType\"\n    ] | order(name asc)\n    ": All_PRODUCTS_QUERYResult;
+    "\n        *[\n            _type == \"productType\"\n            && references(*[_type == \"category\" && slug.current == $categorySlug]._id)\n        ]\n    ": PRODUCT_BY_CATEGORY_QUERYResult;
     "\n        *[\n            _type == \"productType\" && slug.current == $slug\n        ] | order(name asc) [0]\n        ": PRODUCT_BY_ID_QUERYResult;
     "\n        *[\n            _type == \"productType\"\n            && name match $searchParam\n        ] | order(name asc)\n        ": PRODUCT_SEARCH_QUERYResult;
     "\n        *[\n            _type == \"sales\"\n            && isActive == true\n            && couponCode == \"BFDEMO\"\n        ] | order(validFrom desc) [0]\n        ": ACTIVE_SALE_BY_COUPON_QUERYResult;
