@@ -1,11 +1,9 @@
 "use client"
 import { createCheckoutSession, Metadata } from '@/actions/createCheckoutSession';
 import AddToBasketButton from '@/components/AddToBasketButton';
-import { Button } from '@/components/ui/button';
 import { imageUrlFor } from '@/lib/imageURL';
 import { useBasketStore } from '@/store/store'
 import { SignInButton, useAuth, useUser } from '@clerk/nextjs';
-import { EmailAddress } from '@clerk/nextjs/server';
 import { Loader } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -123,8 +121,8 @@ function BasketPage() {
                             </span>
                         </p>
                     </div>
-                  
-                  
+
+
                     {isSignedIn ? (
                         <button
                             onClick={handleCheckOut}

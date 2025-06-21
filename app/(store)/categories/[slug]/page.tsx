@@ -1,7 +1,6 @@
 import ProductsView from '@/components/ProductsView';
 import { getAllCategories } from '@/sanity/lib/products/getAllCategories';
 import getProductByCategory from '@/sanity/lib/products/getProductByCategory';
-import { getProductBySlug } from '@/sanity/lib/products/getProductBySlug';
 import React from 'react'
 
 
