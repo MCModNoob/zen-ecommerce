@@ -2,13 +2,7 @@
 
 import { imageUrlFor } from "@/lib/imageURL";
 import stripe from "@/lib/stripe";
-import { ProductType } from "@/sanity.types";
 import { BasketItem } from "@/store/store";
-import { createOrderInSanity } from "@/app/(store)/webhook/route";
-
-// Remove unused imports
-// import { metadata } from "next-sanity/studio";
-// import { tree } from "next/dist/build/templates/app-page";
 
 export type Metadata = {
     orderNumber: string;
