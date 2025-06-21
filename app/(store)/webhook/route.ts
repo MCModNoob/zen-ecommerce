@@ -1,14 +1,10 @@
+"use server"
 import { headers } from 'next/headers';
 import { NextResponse, NextRequest } from 'next/server';
 import stripe from '@/lib/stripe';
 import Stripe from 'stripe';
-import { error } from 'console';
-import { Currency } from 'lucide-react';
-import { metadata } from 'next-sanity/studio';
+
 import { Metadata } from '@/actions/createCheckoutSession';
-import productPage from '../product/[slug]/page';
-import { productType } from '@/sanity/schemaTypes/productType';
-import { Quantico } from 'next/font/google';
 import { backendClient } from '@/sanity/lib/backendClient';
 
 export async function POST(req: NextRequest) {
@@ -33,7 +29,6 @@ export async function POST(req: NextRequest) {
     try {
         event = stripe.webhooks.constructEvent(body, sig, webhooksecret);
     } catch (err) {
-        console.error("Webhook Error:", err);
         return NextResponse.json(
             { error: `webhook error:${err}` }, { status: 400 });
     }
@@ -43,9 +38,8 @@ export async function POST(req: NextRequest) {
             const order = await createOrderInSanity(session);
             console.log("Order created in Sanity:", order)
         } catch (err) {
-            console.error("Error creating order in Sanity:", err)
             return NextResponse.json(
-                { error: "Error creating order" },
+                { error: "Error creating order" ,err},
                 { status: 500 },
             );
         }
@@ -53,7 +47,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ received: true });
 }
 
-async function createOrderInSanity(session: Stripe.Checkout.Session) {
+export async function createOrderInSanity(session: Stripe.Checkout.Session) {
     const {
         id,
         amount_total,
@@ -63,9 +57,9 @@ async function createOrderInSanity(session: Stripe.Checkout.Session) {
         customer,
         total_details,
     } = session;
-    const { orderNumber, customerName, customerEmail, clerkUserID } = metadata as Metadata
+    const { orderNumber, customerName, customerEmail, clerkUserID } = metadata as Metadata;
 
-    
+
 
     const lineItemsWithProduct = await stripe.checkout.sessions.listLineItems(
         id,
@@ -94,11 +88,12 @@ async function createOrderInSanity(session: Stripe.Checkout.Session) {
         currency,
         amountDiscount: total_details?.amount_discount ? total_details.amount_discount / 100
             : 0,
-        products:sanityProducts,
-        totalPrice: amount_total? amount_total/100:0,
-        status:"paid",
+        products: sanityProducts,
+        totalPrice: amount_total ? amount_total / 100 : 0,
+        status: "paid",
         orderDate: new Date().toISOString()
     })
 
     return order
 }
+

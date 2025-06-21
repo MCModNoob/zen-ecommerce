@@ -1,7 +1,6 @@
 "use client"
 import { ProductType } from '@/sanity.types'
 import { useBasketStore } from '@/store/store';
-import { count } from 'console';
 import { useEffect, useState } from 'react'
 
 

@@ -2,15 +2,12 @@ import { getMyOrders } from "@/sanity/lib/orders/getMyOrders";
 import { auth } from "@clerk/nextjs/server"
 import { redirect } from "next/navigation"
 import React from "react"
-import { MY_ORDERS_QUERYResult } from "@/sanity.types"
 import { formatCurrency } from "@/lib/formatCurrency";
-import productPage from "../product/[slug]/page";
 import Image from "next/image";
 import { imageUrlFor } from "@/lib/imageURL";
 
 async function OrderPage() {
     const { userId } = await auth();
-    console.log(userId, " <<<<<<< userID")
     if (!userId) {
         return redirect("/");
     }

@@ -1,12 +1,11 @@
 import ProductsView from "@/components/ProductsView";
-import { Button } from "@/components/ui/button";
 import { getAllProducts } from "@/sanity/lib/products/getAllProducts";
-import { ProductType } from "@/sanity.types";
-import { Category } from "@/sanity.types";
-
 import { getAllCategories } from "@/sanity/lib/products/getAllCategories";
 import BfdemoBanner from "@/components/BfdemoBanner";
-import { CategorySelectorComponent } from "@/components/ui/Category-selector";
+
+
+export const dynamic = "force-static";
+export const revalidate = 60;
 
 export default async function Home() {
   const products = await getAllProducts();

@@ -4,7 +4,8 @@ import { imageUrlFor } from "@/lib/imageURL";
 import stripe from "@/lib/stripe";
 import { ProductType } from "@/sanity.types";
 import { BasketItem } from "@/store/store";
-import { createOrder } from "@/lib/orders";
+import { createOrderInSanity } from "@/app/(store)/webhook/route";
+
 // Remove unused imports
 // import { metadata } from "next-sanity/studio";
 // import { tree } from "next/dist/build/templates/app-page";
@@ -40,21 +41,6 @@ export async function createCheckoutSession(
         if (custmomers.data.length > 0) {
             customerId = custmomers.data[0].id;
         }
-
-        // Calculate total price for the order
-        const totalPrice = items.reduce(
-            (total, item) => total + (item.product.price || 0) * item.quantity,
-            0
-        );
-
-        // Create the order in Sanity first
-        await createOrder({
-            items,
-            metadata,
-            totalPrice,
-            currency: "gbp",
-            status: "pending"
-        });
 
         // Then create the Stripe checkout session
         const session = await stripe.checkout.sessions.create({

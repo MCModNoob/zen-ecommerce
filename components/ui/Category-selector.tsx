@@ -1,6 +1,5 @@
 "use client"
 
-import { client } from "@/sanity/lib/client"
 import { Category } from "@/sanity/sanity.types"
 import * as React from "react"
 import { Button } from "@/components/ui/button"
